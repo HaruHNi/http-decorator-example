@@ -1,26 +1,56 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react'
+import { Global, css } from '@emotion/react'
 
-function App() {
+import ListItem from './components/ListItem'
+
+import PhotosService, { Photo } from './services/photos'
+
+const App: React.FC = () => {
+  const [photos, setPhotos] = useState<Photo[]>([])
+
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      const result = await new PhotosService().getPhotos()
+      if (result) {
+        setPhotos(result)
+      }
+    }
+
+    fetchPhotos()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Global styles={globalStyle} />
+      <div>
+        <h1 css={headerStyle}>Fake API Sample!!</h1>
+      </div>
+      <ul css={listStyle}>
+        {photos.map((photo, index) => {
+          return <ListItem key={index} {...photo} />
+        })}
+      </ul>
+    </>
   )
 }
 
 export default App
+
+const globalStyle = css`
+  body {
+    margin: 0;
+  }
+`
+
+const headerStyle = css`
+  padding: 10px 0;
+  margin: 0;
+  text-align: center;
+  background-color: #ededed;
+`
+
+const listStyle = css`
+  list-style-type: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+`
