@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
+import LazyImage from './LazyImage'
 
 interface ListItemProps {
   thumbnailUrl: string
@@ -9,7 +10,7 @@ interface ListItemProps {
 const ListItem: React.FC<ListItemProps> = ({ thumbnailUrl, title }) => {
   return (
     <li css={listItemStyle}>
-      <img src={thumbnailUrl} alt="thumbnail image" />
+      <LazyImage src={thumbnailUrl} alt="thumbnail image" />
       <span>{title}</span>
     </li>
   )

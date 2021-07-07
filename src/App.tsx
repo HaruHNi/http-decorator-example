@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Global, css } from '@emotion/react'
 
 import ListItem from './components/ListItem'
-
 import PhotosService, { Photo } from './services/photos'
 
 const App: React.FC = () => {
@@ -12,7 +11,7 @@ const App: React.FC = () => {
     const fetchPhotos = async () => {
       const result = await new PhotosService().getPhotos()
       if (result) {
-        setPhotos(result)
+        setPhotos(result.slice(0, 499))
       }
     }
 
